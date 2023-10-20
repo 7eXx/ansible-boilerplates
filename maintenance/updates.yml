@@ -1,0 +1,21 @@
+- name: Upgrade all packages
+  hosts: all
+  become: true  
+  tasks:
+    - name: Update apt cache
+      apt: update_cache=yes
+      when: ansible_facts['os_family'] == "Debian"
+    
+    - name: Get upgradable packages
+      command: apt list --upgradable
+      when: ansible_facts['os_family'] == "Debian"
+      register: upgradable
+      changed_when: False
+    
+    - name: Upgrade packages report
+      debug: var='upgradable.stdout_lines'
+      when: upgradable.stdout_lines is defined
+
+    - name: Performs upgrade
+      apt:
+        upgrade: yes

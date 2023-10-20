@@ -1,0 +1,12 @@
+- name: Disk cleanup
+  hosts: all
+  become: true
+  tasks:
+    - name: Performs a cache clear
+      command: apt-get clean cache
+    
+    - name: Autoremove all unused packages
+      command: apt-get autoremove -y
+
+    - name: Keep only latest 2 days of logs
+      command: journalctl --vacuum-time=2d
