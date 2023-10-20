@@ -4,9 +4,13 @@
   tasks:
     - name: Performs a cache clear
       command: apt-get clean cache
+      args:
+        warn: false
     
     - name: Autoremove all unused packages
       command: apt-get autoremove -y
+      args:
+        warn: false
 
     - name: Keep only latest 2 days of logs
       command: journalctl --vacuum-time=2d
