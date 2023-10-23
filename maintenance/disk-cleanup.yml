@@ -6,7 +6,7 @@
       command: apt-get clean cache
       args:
         warn: false
-    
+
     - name: Autoremove all unused packages
       command: apt-get autoremove -y
       args:

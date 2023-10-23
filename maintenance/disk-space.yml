@@ -1,0 +1,19 @@
+- name: Disk space information
+  hosts: all
+  become: true
+  tasks:
+  - name: Check disk space
+    command: df -h
+    register: disk_usage
+
+  - name: Disk usage report
+    debug: var='disk_usage.stdout_lines'
+    when: disk_usage.stdout_lines is defined
+
+  - name: Disk space available
+    shell: df -h / | awk 'NR==2 {print $5}'
+    register: disk_space
+
+  - name: Disk space available report
+    debug: var='disk_space.stdout'
+    when: disk_space.stdout is defined
