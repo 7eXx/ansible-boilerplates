@@ -2,5 +2,7 @@
   hosts: all
   become: true
   tasks:
+    - name: Docker remove unused images
+      command: docker image prune -a -f
     - name: Docker prune everything
-      command: docker system prune -f 
+      command: docker system prune -a -f
